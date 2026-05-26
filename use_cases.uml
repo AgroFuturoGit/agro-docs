@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowless true
+
+actor "Produtor Rural" as producer
+actor "Técnico Agrícola" as technician
+actor "Gestor de Cooperativa" as manager
+actor "Administrador" as admin
+actor "Sistema (Automatizado)" as system
+
+rectangle "SmartAgro - Ecossistema de Gestão Agrícola" {
+    usecase "UC01 - Autenticar no Sistema" as UC01
+    usecase "UC02 - Gerir Dados Pessoais e Família" as UC02
+    usecase "UC03 - Registar Planeamento de Safra" as UC03
+    usecase "UC04 - Registar Execução e Colheita" as UC04
+    usecase "UC05 - Registar Ocorrência de Campo" as UC05
+    usecase "UC06 - Anexar Evidências Fotográficas" as UC06
+    usecase "UC07 - Acompanhar Produtores Assistidos" as UC07
+    usecase "UC08 - Visualizar Dashboards Agrícolas" as UC08
+    usecase "UC09 - Consultar Indicadores Consolidados" as UC09
+    usecase "UC10 - Gerir Utilizadores e Perfis" as UC10
+    usecase "UC11 - Gerir Parâmetros Base" as UC11
+    usecase "UC12 - Consultar Logs de Auditoria" as UC12
+    usecase "UC13 - Disparar Alertas Críticos" as UC13
+    usecase "UC14 - Gerar Prognóstico de Produção" as UC14
+}
+
+' Associações do Produtor
+producer --> UC01
+producer --> UC02
+producer --> UC03
+producer --> UC04
+producer --> UC08
+
+' Associações do Técnico
+technician --> UC01
+technician --> UC05
+technician --> UC07
+technician --> UC08
+
+' Relacionamento de Inclusão (Include)
+UC05 ..> UC06 : <<include>>
+
+' Associações do Gestor
+manager --> UC01
+manager --> UC09
+manager --> UC08
+
+' Associações do Administrador
+admin --> UC01
+admin --> UC10
+admin --> UC11
+admin --> UC12
+
+' Ações Automatizadas do Sistema
+system --> UC13
+system --> UC14
+
+' Destinatários dos Alertas
+UC13 --> producer
+UC13 --> technician
+@endum
